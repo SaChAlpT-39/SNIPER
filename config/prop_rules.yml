@@ -1,0 +1,19 @@
+﻿accounts:
+  - id: "FTMO10K"
+    provider: "FTMO"
+    phase: "challenge"        # challenge | verification | funded
+    initial_capital: 100000
+    reset_time: "22:00"       # heure locale prop
+    rules:
+      daily_loss_limit: 5000          # USD
+      max_drawdown: 10000             # USD
+      drawdown_type: "trailing"       # static | trailing
+  - id: "5ers25K"
+    provider: "The5ers"
+    phase: "funded"
+    initial_capital: 25000
+    reset_time: "22:00"
+    rules:
+      daily_loss_limit: 1250
+      max_drawdown: 2500
+      drawdown_type: "static"

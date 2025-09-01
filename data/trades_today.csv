@@ -1,0 +1,5 @@
+﻿time,symbol,side,size,pnl,r,account_id
+09:15,XAUUSD,short,1,-50,-0.1,FTMO10K
+10:30,USDJPY,long,1,150,0.3,FTMO10K
+11:40,BTCUSDT,short,0.5,-100,-0.2,FTMO10K
+10:10,GBPUSD,long,0.5,30,0.06,5ers25K
