@@ -7,7 +7,7 @@ import streamlit as st
 import yaml
 from datetime import datetime, timedelta
 import pytz
-
+from modules_utils.notify import send_telegram
 from modules_utils.ledger import read_ledger, append_entry
 from modules_utils.audit import audit
 from modules_utils.paths import PROP_LOG
@@ -225,6 +225,31 @@ def render_propfirm():
         st.info("Aucun trade du jour (data/trades_today.csv).")
 
     st.divider()
+    st.markdown("#### Alertes Telegram (seuils)")
+    a1, a2, a3 = st.columns([1,1,1])
+    with a1:
+        daily_thresh = st.slider("Seuil Daily Loss restant (%)", min_value=0, max_value=100, value=30, step=5,
+                                 help="Alerte si le pourcentage restant tombe sous ce seuil.")
+    with a2:
+        dd_thresh = st.slider("Seuil Max DD restant (%)", min_value=0, max_value=100, value=30, step=5,
+                              help="Alerte si le pourcentage restant tombe sous ce seuil.")
+    with a3:
+        if st.button("Envoyer message test"):
+            ok = send_telegram(f"[SNIPER] Test alerte Telegram pour compte {acc_id}")
+            st.success("Message Telegram envoyé ✅" if ok else "Config Telegram manquante ❌ (config/telegram.yml)")
+
+    # Déclenchement d'une alerte si sous le seuil (façon “soft” : on notifie à l'affichage)
+    alerts = []
+    if kpis["daily_pct"] is not None and kpis["daily_pct"] < daily_thresh:
+        alerts.append(f"⚠️ Daily loss restant {kpis['daily_pct']}% (compte {acc_id})")
+    if kpis["dd_pct"] is not None and kpis["dd_pct"] < dd_thresh:
+        alerts.append(f"⚠️ Max DD restant {kpis['dd_pct']}% (compte {acc_id})")
+
+    if alerts:
+        msg = "\n".join(alerts)
+        st.warning(msg)
+        # tentative d'envoi Telegram
+        send_telegram(f"[SNIPER][{acc_id}] {msg}")
 
     # === Compta & Logs prop (filtrés par compte) ===
     render_prop_compta_logs(acc_id)
