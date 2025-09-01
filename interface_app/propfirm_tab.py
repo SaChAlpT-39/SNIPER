@@ -116,7 +116,14 @@ def render_prop_compta_logs(acc_id: str):
         if "account" in df.columns:
             df = df[df["account"] == acc_id]
         st.dataframe(df, use_container_width=True)
-
+    # Export CSV (filtré)
+    if not df.empty:
+        st.download_button(
+            f"Exporter Prop ({acc_id}) (CSV)",
+            data=df.to_csv(index=False).encode("utf-8"),
+            file_name=f"prop_{acc_id}_export.csv",
+            mime="text/csv",
+        )
     col1, col2 = st.columns(2)
     with col1:
         if st.button(f"Test: + écriture Prop ({acc_id}) +100$"):
