@@ -5,6 +5,7 @@ from pathlib import Path
 import yaml
 
 from modules_utils.config_loader import ConfigLoader
+from modules_utils.rate_limiter import RateLimiter   # <— ADD
 
 def setup_logging(cfg_path: Path = Path("config/logging.yml")):
     with open(cfg_path, "r", encoding="utf-8") as f:
@@ -25,6 +26,13 @@ def main():
     log.info(f"system: mode={system.mode}, logging_cfg={system.logging_cfg}")
     log.info(f"risk: dd={risk.max_daily_dd_pct}%, r/trade={risk.max_trade_r_pct}%, targetRR={risk.target_rr}")
     log.info("api_limits: " + json.dumps(summary, ensure_ascii=False))
+
+    # --- RATE LIMITER DEMO ---
+    rl = RateLimiter()
+    rl.set_limit_from_summary('binance.futures', summary, burst=40)
+    # simulate one weighted call (e.g., endpoint with weight=5)
+    rl.call('binance.futures', cost=5)
+    log.info("rate_limiter: first weighted call (binance.futures cost=5) passed")
 
     print("SNIPER boot OK. See logs/system.log and console.")
     return 0
