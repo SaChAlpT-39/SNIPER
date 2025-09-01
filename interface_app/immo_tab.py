@@ -17,7 +17,13 @@ def render_immo():
         st.info("Aucune écriture dans data/immo_compta.csv")
     else:
         st.dataframe(df, use_container_width=True)
-
+    if not df.empty:
+        st.download_button(
+            "Exporter Immo (CSV)",
+            data=df.to_csv(index=False).encode("utf-8"),
+            file_name="immo_compta_export.csv",
+            mime="text/csv",
+        )
     # Ajout rapide d'une écriture (asset libre)
     col1, col2, col3 = st.columns(3)
     with col1:
