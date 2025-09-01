@@ -1,0 +1,4 @@
+﻿risk:
+  max_daily_dd_pct: 2.0
+  max_trade_r_pct: 1.0
+  target_rr: 2.0

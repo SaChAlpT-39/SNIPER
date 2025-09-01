@@ -1,0 +1,3 @@
+﻿system:
+  mode: dev   # dev | live | backtest
+  logging_cfg: config/logging.yml

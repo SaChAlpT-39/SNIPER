@@ -1,0 +1,22 @@
+﻿# Logs & DB
+logs/*
+!logs/.gitkeep
+*.log
+*.sqlite
+
+# Data artifacts
+data/archived_backtests/**
+data/models/**
+
+# Python cache & env
+__pycache__/
+*.pyc
+.venv/
+env/
+venv/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

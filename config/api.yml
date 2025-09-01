@@ -1,0 +1,4 @@
+﻿yahoo:
+  requests_per_min: 60
+binance:
+  requests_per_min: 120
