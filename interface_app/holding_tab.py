@@ -142,6 +142,7 @@ def render_holding():
             st.info("Aucun outil déclaré.")
 
     st.caption("Les KPIs seront alimentés par les modules compta/prop/immo plus tard.")
-
+# Ouvre le fichier pour édition rapide
+notepad .\interface_app\holding_compta_logs.py
     # === Compta & Logs consolidés (holding) ===
     render_holding_compta_logs()
