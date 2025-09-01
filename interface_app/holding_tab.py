@@ -146,3 +146,11 @@ def render_holding():
 notepad .\interface_app\holding_compta_logs.py
     # === Compta & Logs consolidés (holding) ===
     render_holding_compta_logs()
+    # Export CSV
+    if not df.empty:
+        st.download_button(
+            "Exporter Holding (CSV)",
+            data=df.to_csv(index=False).encode("utf-8"),
+            file_name="holding_compta_export.csv",
+            mime="text/csv",
+        )
